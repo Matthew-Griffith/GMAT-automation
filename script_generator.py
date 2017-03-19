@@ -2,6 +2,8 @@
 file and save them to their own file. this will allow us to generate gmat script
 files over the range of parameters that can be defined below.'''
 
+from math import sin, cos, pi
+
 # here we will define the range of dates and times to test the simulation over.
 dateRange = ['01 March 2016', '01 June 2016', '01 September 2016', '01 December 2016']
 timeRange = ['00:00:00.000', '12:00:00.000']
@@ -32,17 +34,36 @@ second, second we account of errors that could occur in the magnitdue and pointi
 of the combined satellites.'''
 
 # here we set the range of the orientations using two angles
-angleFromNormalAxis = range(0, 180, 30)         # in degrees
-angleFromVelAxis = range(0, 360, 30)            # in degrees
+angleFromNormalAxis = list(float_range(0, pi, pi/3))         # in rad
+angleFromVelAxis = list(float_range(0, 2*pi, pi/3))           # in rad
 # from here we set the variations of the velocity magnitude
-sepVelMag = list(float_range(0.06, 0.1, 0.01))  # in m/s
+sepVelMag = list(float_range(6e-05, 1e-04, 1e-05))  # in km/s
 # next we can have the pointing accurcy which is +/- 5 degrees in any direction which
 # will effect the two angles that we defined for the orientation
-pointErrNormal = range(-5, 5, 1)                # in degrees
-pointErrVel = range(-5, 5, 1)                   # in degrees
+pointingAccStart = -5 * (pi/180)
+pointingAccStop = 5 * (pi/180)
+pointingAccStep = 1 * (pi/180)
+pointErrNormal = list(float_range(pointingAccStart, pointingAccStop, pointingAccStep))  # in rad
+pointErrVel = list(float_range(pointingAccStart, pointingAccStop, pointingAccStep))     # in rad
 # here we will create empty lists to hold our VNB values that will appended in for
 # loops that will be written later.
 sepVelRangeV = []
 sepVelRangeN = []
 sepVelRangeB = []
 # next we use these ranges to define the sep velocity vector and convert to VNB
+for iAngleFromNorm in range(len(angleFromNormalAxis)):
+    for iAngleFromVel in range(len(angleFromVelAxis)):
+        for iSepMag in range(len(sepVelMag)):
+            for iPointErrNorm in range(len(pointErrNormal)):
+                for iPointErrVel in range(len(pointErrVel)):
+                    V = sepVelMag[iSepMag] * sin(angleFromVelAxis[iAngleFromVel] + 
+                        pointErrVel[iPointErrVel]) * cos(angleFromNormalAxis[iAngleFromNorm] + 
+                        pointErrNormal[iPointErrNorm])
+                    N = sepVelMag[iSepMag] * cos(angleFromVelAxis[iAngleFromVel] + 
+                        pointErrVel[iPointErrVel])
+                    B = sepVelMag[iSepMag] * sin(angleFromVelAxis[iAngleFromVel] + 
+                        pointErrVel[iPointErrVel]) * sin(angleFromNormalAxis[iAngleFromNorm] + 
+                        pointErrNormal[iPointErrNorm])
+                    sepVelRangeV.append(V)
+                    sepVelRangeN.append(N)
+                    sepVelRangeB.append(B)
