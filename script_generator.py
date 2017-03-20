@@ -7,6 +7,10 @@ from math import sin, cos, pi
 # here we will define the range of dates and times to test the simulation over.
 dateRange = ["'01 Mar 2016", "'01 Jun 2016", "'01 Sep 2016", "'01 Dec 2016"]
 timeRange = ["00:00:00.000'", "12:00:00.000'"]
+# here we have another time & date range for the filename so that it will be smaller and 
+# easier to read. 
+dateRangeFile = ["Mar", "Jun", "Sep", "Dec"]
+timeRangeFile = ["00", "12"]
 
 def float_range(start, stop, step):
     '''python built in range() function doesn't work of floating point numbers.
@@ -101,7 +105,7 @@ for iTime in range(len(timeRange)):
                     for iSepVec in range(len(sepVelRangeV)):
                         # now these for loop will track and update our position in their
                         # given ranges, the first thing we need is a helpful filename
-                        filename = (dateRange[iDate] + "_" + timeRange[iTime] + "_" + semiMajorAxisRange[iSMA] + "_"
+                        filename = (dateRangeFile[iDate] + "_" + timeRangeFile[iTime] + "_" + semiMajorAxisRange[iSMA] + "_"
                                     + eccentricityRange[iEcc] + "_" + inclinationRange[iInc] + "_"
                                     + sepVelRangeVStr[iSepVec] + "_" + sepVelRangeNStr[iSepVec] + "_"
                                     + sepVelRangeBStr[iSepVec] + ".csv")
@@ -146,4 +150,4 @@ for iTime in range(len(timeRange)):
                                 currentFile.write(line)
                         # now we need to close the currentFile
                         currentFile.close()
-template.close()
+                        template.close()

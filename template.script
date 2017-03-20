@@ -11,8 +11,8 @@ GMAT Emitter.DateFormat = UTCGregorian;
 GMAT Emitter.Epoch = '12 Dec 2016 21:05:09.000';
 GMAT Emitter.CoordinateSystem = EarthMJ2000Eq;
 GMAT Emitter.DisplayStateType = Keplerian;
-GMAT Emitter.SMA = 6883.14857400001;
-GMAT Emitter.ECC = 6.098065474502555e-016;
+GMAT Emitter.SMA = 6883.148574000012;
+GMAT Emitter.ECC = 7.361915405826057e-016;
 GMAT Emitter.INC = 0;
 GMAT Emitter.RAAN = 0;
 GMAT Emitter.AOP = 0;
@@ -54,8 +54,8 @@ GMAT Detector.DateFormat = UTCGregorian;
 GMAT Detector.Epoch = '12 Dec 2016 21:05:09.000';
 GMAT Detector.CoordinateSystem = EarthMJ2000Eq;
 GMAT Detector.DisplayStateType = Keplerian;
-GMAT Detector.SMA = 6883.14857400001;
-GMAT Detector.ECC = 6.098065474502555e-016;
+GMAT Detector.SMA = 6883.148574000012;
+GMAT Detector.ECC = 7.361915405826057e-016;
 GMAT Detector.INC = 0;
 GMAT Detector.RAAN = 0;
 GMAT Detector.AOP = 0;
@@ -107,7 +107,7 @@ GMAT ElectricThruster1.ThrustDirection2 = 0;
 GMAT ElectricThruster1.ThrustDirection3 = 0;
 GMAT ElectricThruster1.DutyCycle = 1;
 GMAT ElectricThruster1.ThrustScaleFactor = 1;
-GMAT ElectricThruster1.DecrementMass = true;
+GMAT ElectricThruster1.DecrementMass = false;
 GMAT ElectricThruster1.Tank = {ElectricTank1};
 GMAT ElectricThruster1.MixRatio = [ 1 ];
 GMAT ElectricThruster1.GravitationalAccel = 9.810000000000001;
@@ -162,6 +162,8 @@ GMAT SolarPowerSystem2.SolarCoeff2 = -0.10848;
 GMAT SolarPowerSystem2.SolarCoeff3 = -0.11665;
 GMAT SolarPowerSystem2.SolarCoeff4 = 0.10843;
 GMAT SolarPowerSystem2.SolarCoeff5 = -0.01279;
+
+
 
 
 
@@ -267,6 +269,7 @@ GMAT SatelliteReports.LeftJustify = On;
 GMAT SatelliteReports.ZeroFill = On;
 GMAT SatelliteReports.FixedWidth = false;
 GMAT SatelliteReports.Delimiter = ',';
+GMAT SatelliteReports.ColumnWidth = 23;
 GMAT SatelliteReports.WriteReport = true;
 
 
@@ -280,7 +283,7 @@ Maneuver EmitterDetatchment(Emitter);
 Maneuver DetectorDetachment(Detector);
 BeginFiniteBurn TestFiring(Emitter);
 Toggle 'EmitterReportOn' SatelliteReports On;
-Propagate Synchronized DefaultProp(Detector) DefaultProp(Emitter) {Detector.ElapsedSecs = 54000};
+Propagate Synchronized DefaultProp(Detector) DefaultProp(Emitter) {Detector.ElapsedSecs = 86400};
 
 Toggle 'EmitterReportOff' SatelliteReports Off;
 EndFiniteBurn TestFiring(Emitter);
