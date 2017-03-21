@@ -7,8 +7,8 @@ from math import sin, cos, pi
 # here we will define the range of dates and times to test the simulation over.
 dateRange = ["'01 Mar 2016", "'01 Jun 2016", "'01 Sep 2016", "'01 Dec 2016"]
 timeRange = ["00:00:00.000'", "12:00:00.000'"]
-# here we have another time & date range for the filename so that it will be smaller and 
-# easier to read. 
+# here we have another time & date range for the filename so that it will be smaller and
+# easier to read.
 dateRangeFile = ["Mar", "Jun", "Sep", "Dec"]
 timeRangeFile = ["00", "12"]
 
@@ -66,13 +66,13 @@ for iAngleFromNorm in range(len(angleFromNormalAxis)):
                 for iPointErrVel in range(len(pointErrVel)):
                     # here V, N and B are temp vars that will be appended on those empty
                     # lists that were created earlier.
-                    V = sepVelMag[iSepMag] * sin(angleFromVelAxis[iAngleFromVel] + 
-                        pointErrVel[iPointErrVel]) * cos(angleFromNormalAxis[iAngleFromNorm] + 
+                    V = sepVelMag[iSepMag] * sin(angleFromVelAxis[iAngleFromVel] +
+                        pointErrVel[iPointErrVel]) * cos(angleFromNormalAxis[iAngleFromNorm] +
                         pointErrNormal[iPointErrNorm])
                     N = sepVelMag[iSepMag] * cos(angleFromVelAxis[iAngleFromVel] + 
                         pointErrVel[iPointErrVel])
-                    B = sepVelMag[iSepMag] * sin(angleFromVelAxis[iAngleFromVel] + 
-                        pointErrVel[iPointErrVel]) * sin(angleFromNormalAxis[iAngleFromNorm] + 
+                    B = sepVelMag[iSepMag] * sin(angleFromVelAxis[iAngleFromVel] +
+                        pointErrVel[iPointErrVel]) * sin(angleFromNormalAxis[iAngleFromNorm] +
                         pointErrNormal[iPointErrNorm])
                     sepVelRangeV.append(V)
                     sepVelRangeN.append(N)
@@ -91,7 +91,7 @@ sepVelRangeVStr = list(map(str, sepVelRangeV))
 sepVelRangeNStr = list(map(str, sepVelRangeN))
 sepVelRangeBStr = list(map(str, sepVelRangeB))
 
-# there is a issue with filename size, so in order to create unique short filenames 
+# there is a issue with filename size, so in order to create unique short filenames
 # we will create a counter and increment it each iteration.
 counter = 0
 
@@ -105,49 +105,67 @@ for iTime in range(len(timeRange)):
                     for iSepVec in range(len(sepVelRangeV)):
                         # now these for loop will track and update our position in their
                         # given ranges, the first thing we need is a helpful filename
-                        filename = (dateRangeFile[iDate] + "_" + timeRangeFile[iTime] + "_" + semiMajorAxisRange[iSMA] + "_"
-                                    + eccentricityRange[iEcc] + "_" + inclinationRange[iInc] + "_"
-                                    + sepVelRangeVStr[iSepVec] + "_" + sepVelRangeNStr[iSepVec] + "_"
-                                    + sepVelRangeBStr[iSepVec] + ".csv")
-                        counter += 1
+                        filename = (dateRangeFile[iDate] + "_" + timeRangeFile[iTime] + "_"
+                                    + semiMajorAxisRange[iSMA] + "_" + eccentricityRange[iEcc]
+                                    + "_" + inclinationRange[iInc] + "_"
+                                    + sepVelRangeVStr[iSepVec] + "_" + sepVelRangeNStr[iSepVec]
+                                    + "_" + sepVelRangeBStr[iSepVec] + ".csv")
                         # now we will read in the template script into memory.
                         template = open("template.script", "r")
                         currentFile = open("Generated-Scripts/" + str(counter) + ".script", 'w')
                         for line in template.readlines():
-                            # now we loop through all the lines in our template file and write to the 
-                            # currentFile 
+                            # now we loop through all the lines in our template file
+                            #  and write to the currentFile
                             if line.startswith("GMAT Emitter.Epoch ="):
-                                currentFile.write("GMAT Emitter.Epoch = " + dateRange[iDate] + " " + timeRange[iTime] + ";\n")
+                                currentFile.write("GMAT Emitter.Epoch = "
+                                                  + dateRange[iDate] + " "
+                                                  + timeRange[iTime] + ";\n")
                             elif line.startswith("GMAT Detector.Epoch ="):
-                                currentFile.write("GMAT Detector.Epoch = " + dateRange[iDate] + " " + timeRange[iTime] + ";\n")
+                                currentFile.write("GMAT Detector.Epoch = "
+                                                  + dateRange[iDate] + " "
+                                                  + timeRange[iTime] + ";\n")
                             elif line.startswith("GMAT Emitter.SMA"):
-                                currentFile.write("GMAT Emitter.SMA = " + semiMajorAxisRange[iSMA] + ";\n")
+                                currentFile.write("GMAT Emitter.SMA = "
+                                                  + semiMajorAxisRange[iSMA] + ";\n")
                             elif line.startswith("GMAT Detector.SMA"):
-                                currentFile.write("GMAT Detector.SMA = " + semiMajorAxisRange[iSMA] + ";\n")
+                                currentFile.write("GMAT Detector.SMA = "
+                                                  + semiMajorAxisRange[iSMA] + ";\n")
                             elif line.startswith("GMAT Emitter.ECC"):
-                                currentFile.write("GMAT Emitter.ECC = " + eccentricityRange[iEcc] + ";\n")
+                                currentFile.write("GMAT Emitter.ECC = "
+                                                  + eccentricityRange[iEcc] + ";\n")
                             elif line.startswith("GMAT Detector.ECC"):
-                                currentFile.write("GMAT Detector.ECC = " + eccentricityRange[iEcc] + ";\n")
+                                currentFile.write("GMAT Detector.ECC = "
+                                                  + eccentricityRange[iEcc] + ";\n")
                             elif line.startswith("GMAT Emitter.INC"):
-                                currentFile.write("GMAT Emitter.INC = " + inclinationRange[iInc] + ";\n")
+                                currentFile.write("GMAT Emitter.INC = "
+                                                  + inclinationRange[iInc] + ";\n")
                             elif line.startswith("GMAT Detector.INC"):
-                                currentFile.write("GMAT Detector.INC = " + inclinationRange[iInc] + ";\n")
+                                currentFile.write("GMAT Detector.INC = "
+                                                  + inclinationRange[iInc] + ";\n")
                             elif line.startswith("GMAT EmitterDetatchment.Element1"):
-                                currentFile.write("GMAT EmitterDetatchment.Element1 = " + str(sepVelRangeV[iSepVec]/2) + ";\n")
+                                currentFile.write("GMAT EmitterDetatchment.Element1 = "
+                                                  + str(sepVelRangeV[iSepVec]/2) + ";\n")
                             elif line.startswith("GMAT EmitterDetatchment.Element2"):
-                                currentFile.write("GMAT EmitterDetatchment.Element2 = " + str(sepVelRangeN[iSepVec]/2) + ";\n")
+                                currentFile.write("GMAT EmitterDetatchment.Element2 = "
+                                                  + str(sepVelRangeN[iSepVec]/2) + ";\n")
                             elif line.startswith("GMAT EmitterDetatchment.Element3"):
-                                currentFile.write("GMAT EmitterDetatchment.Element3 = " + str(sepVelRangeB[iSepVec]/2) + ";\n")
+                                currentFile.write("GMAT EmitterDetatchment.Element3 = "
+                                                  + str(sepVelRangeB[iSepVec]/2) + ";\n")
                             elif line.startswith("GMAT DetectorDetachment.Element1"):
-                                currentFile.write("GMAT DetectorDetachment.Element1 = " + str(-1 * sepVelRangeV[iSepVec]/2) + ";\n")
+                                currentFile.write("GMAT DetectorDetachment.Element1 = "
+                                                  + str(-1 * sepVelRangeV[iSepVec]/2) + ";\n")
                             elif line.startswith("GMAT DetectorDetachment.Element2"):
-                                currentFile.write("GMAT DetectorDetachment.Element2 = " + str(-1 * sepVelRangeN[iSepVec]/2) + ";\n")
+                                currentFile.write("GMAT DetectorDetachment.Element2 = "
+                                                  + str(-1 * sepVelRangeN[iSepVec]/2) + ";\n")
                             elif line.startswith("GMAT DetectorDetachment.Element3"):
-                                currentFile.write("GMAT DetectorDetachment.Element3 = " + str(-1 * sepVelRangeB[iSepVec]/2) + ";\n")
+                                currentFile.write("GMAT DetectorDetachment.Element3 = "
+                                                  + str(-1 * sepVelRangeB[iSepVec]/2) + ";\n")
                             elif line.startswith("GMAT SatelliteReports.Filename"):
-                                currentFile.write("GMAT SatelliteReports.Filename = " + pathReport + filename + ";\n")
+                                currentFile.write("GMAT SatelliteReports.Filename = "
+                                                  + pathReport + filename + ";\n")
                             else:
                                 currentFile.write(line)
                         # now we need to close the currentFile
                         currentFile.close()
                         template.close()
+                        counter += 1
