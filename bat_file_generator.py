@@ -1,6 +1,6 @@
 '''
 this script will load the files in our scripts directory into a list then
-will write a .bat file to run these in GMAT. 
+will write a .bat file to run these in GMAT.
 '''
 # to find the filenames we will need to os module
 from os import listdir
