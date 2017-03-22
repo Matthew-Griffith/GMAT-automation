@@ -14,7 +14,7 @@ from os import listdir
 import csv
 from math import sqrt
 
-pathReport = "C:/Users/mattg/Documents/GitHub/GMAT-automation/GMAT-Reports"
+pathReport = "C:/Users/mattg/Documents/GitHub/GMAT-automation/GMAT-Reports/"
 fileNameReports = listdir(pathReport)
 
 '''
@@ -27,7 +27,7 @@ Emitter X pos, Emitter y pos, Emitter z pos, Detector X pos, Detector y pos, Det
 
 time1kmList = []
 for i in range(len(fileNameReports)):
-    with open(fileNameReports[i]) as currentReport:
+    with open(pathReport + fileNameReports[i]) as currentReport:
         reportData = csv.reader(currentReport, delimiter = ',')
 
         # now that we have the files with the report directory opening and the
@@ -43,7 +43,7 @@ for i in range(len(fileNameReports)):
 
         # now we can loop through our csv data and save the values into temp vars
         # and append them to these list.
-        for row in readData:
+        for row in reportData:
             tempEmitterX = row[0]
             tempEmitterY = row[1]
             tempEmitterZ = row[2]
