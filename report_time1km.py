@@ -12,6 +12,7 @@ Date_Time_semiMajorAxis_Eccentricity_Inclination_sepVelV_sepVelN_sepVelB.csv
 from os import listdir
 # this module will make dealing with csv files easier.
 import csv
+from math import sqrt
 
 pathReport = "C:/Users/mattg/Documents/GitHub/GMAT-automation/GMAT-Reports"
 fileNameReports = listdir(pathReport)
@@ -24,6 +25,7 @@ time they are with in 1 km. recall that the reports a column structure of...
 Emitter X pos, Emitter y pos, Emitter z pos, Detector X pos, Detector y pos, Detector z pos, time
 '''
 
+time1kmList = []
 for i in range(len(fileNameReports)):
     with open(fileNameReports[i]) as currentReport:
         reportData = csv.reader(currentReport, delimiter = ',')
@@ -67,4 +69,18 @@ for i in range(len(fileNameReports)):
         detectorPosZ = list(map(float, detectorPosZ))
         time = list(map(float, time))
 
-        
+        time1km = 0
+        for j in range(len(time)):
+            distance = sqrt((emitterPosX[j] - detectorPosX[j])**2 +
+                             (emitterPosY[j] - detectorPosY[j])**2 +
+                             (emitterPosZ[j] - detectorPosZ[j])**2)
+            if j == 0:
+                pass
+            elif distance <= 1:
+                time1km += (time[j] - time[j-1])
+            else:
+                pass
+
+        time1kmList.append(time1km)
+
+print(time1kmList)

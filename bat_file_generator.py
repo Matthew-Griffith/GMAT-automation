@@ -27,3 +27,4 @@ batFile.write("cd " + gmatPath + "\n")
 for i in range(len(scriptNames)):
     batFile.write("GMAT.exe -r -x -m " + pathScript + scriptNames[i] + "\n")
 
+batFile.close()
