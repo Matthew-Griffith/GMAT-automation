@@ -13,6 +13,7 @@ from os import listdir
 # this module will make dealing with csv files easier.
 import csv
 from math import sqrt
+import re
 
 pathReport = "C:/Users/mattg/Documents/GitHub/GMAT-automation/GMAT-Reports/"
 fileNameReports = listdir(pathReport)
@@ -69,13 +70,15 @@ for i in range(len(fileNameReports)):
         detectorPosZ = list(map(float, detectorPosZ))
         time = list(map(float, time))
 
-        time1km = 0
         for j in range(len(time)):
             distance = sqrt((emitterPosX[j] - detectorPosX[j])**2 +
                              (emitterPosY[j] - detectorPosY[j])**2 +
                              (emitterPosZ[j] - detectorPosZ[j])**2)
+            # here on the first iteration of each loop we either create or
+            # reset the var time1km this is important for the elif statement
+            # below so it will not try to access [-1]
             if j == 0:
-                pass
+                time1km = 0
             elif distance <= 1:
                 time1km += (time[j] - time[j-1])
             else:
@@ -83,4 +86,33 @@ for i in range(len(fileNameReports)):
 
         time1kmList.append(time1km)
 
-print(time1kmList)
+'''
+now that we have time the two satellites are within 1 km of each I want to save
+this info with the parameters that we varied with GMAT to another .csv file.
+recall from the top of this file that the filename of the reports actually
+contain these parameters that were used in GMAT. And we have a list of the time
+so we can go through the time and write each row of a csv file where the first
+several columns tell the gmat parameters and the last one is the result.
+
+however, before this I want to write a header for column.
+'''
+with open('C:/Users/mattg/Documents/GitHub/GMAT-automation/results/all_results.csv', 'w', newline = '') as csvfile:
+    resultsWriter = csv.writer(csvfile, delimiter = ',')
+    resultsWriter.writerow(['Month', 'Hour', 'semi Major Axis [km]', 'Eccentricity',
+                            'inclination', 'separation velocity V [km/s]',
+                            'separation velocity N [km/s]', 'separation velocity B [km/s]',
+                            'Time to 1 km [secs]'])
+
+    # now that we have our header line we can start looping and writing the
+    # rest of the file.
+    for j in range(len(time1kmList)):
+        # since we want to write the times to a file we need to convert from
+        # floats to strings.
+        time1kmListStr = list(map(str, time1kmList))
+        # next we want to grab the gmat variables from the filename, these are
+        # all separated by underscores (_)
+        currentRow = fileNameReports[j].split('_')
+        # however, the last entry will have a .csv that we want to remove.
+        currentRow[7] = re.sub(r'\.csv$', '', currentRow[7])
+        currentRow.append(time1kmListStr[j])
+        resultsWriter.writerow(currentRow)
