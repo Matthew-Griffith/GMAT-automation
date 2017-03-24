@@ -82,8 +82,8 @@ for iAngleFromNorm in range(len(angleFromNormalAxis)):
 
 # here we will set the paths to save the GMAT reports and script files
 # here I use an absolute path which makes the running of the scripts easier
-pathScript = "C:/Users/mattg/Documents/GitHub/GMAT-automation/Generated-Scripts/"
-pathReport = "C:/Users/mattg/Documents/GitHub/GMAT-automation/GMAT-Reports/"
+pathScript = "C:/Users/mattg/Documents/GitHub/GMAT-automation/full-analysis-scripts/"
+pathReport = "C:/Users/mattg/Documents/GitHub/GMAT-automation/full-analysis-GMAT-reports/"
 
 # in order to write to the files the ranges need to be converted into strings
 eccentricityRangeStr = list(map(str, eccentricityRange))
@@ -114,7 +114,7 @@ for iTime in range(len(timeRange)):
                                     + "_" + sepVelRangeBStr[iSepVec] + ".csv")
                         # now we will read in the template script into memory.
                         template = open("template.script", "r")
-                        currentFile = open("Generated-Scripts/" + str(counter) + ".script", 'w')
+                        currentFile = open("full-analysis-scripts/" + str(counter) + ".script", 'w')
                         for line in template.readlines():
                             # now we loop through all the lines in our template file
                             #  and write to the currentFile
