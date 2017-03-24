@@ -25,7 +25,7 @@ def float_range(start, stop, step):
 # here we describe the range of state vector components for a keplarian state vector.
 radiusPeriapsis = list(float_range(6728.137, 6978.137, 50))  # kilometers
 eccentricityRange = list(float_range(0.0, 0.5, 0.1))
-inclinationRange = [28, 51.6]       # inclination of ksc and ISS
+inclinationRange = [28.6, 51.6]       # inclination of ksc and ISS
 
 '''below defines the range for separation velocity vector note that the gmat script
 performs this separation using the VNB coordination system where...
