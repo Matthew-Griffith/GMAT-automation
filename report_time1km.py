@@ -5,7 +5,7 @@ script_automation.bat file and find the time the two satellites stay within
 with the parameters that were varied. these varied parameters will be found by
 using the filename which has the following convention...
 
-Date_Time_semiMajorAxis_Eccentricity_Inclination_sepVelV_sepVelN_sepVelB.csv
+Date_Time_radiusPeriasis_Eccentricity_Inclination_sepVelV_sepVelN_sepVelB.csv
 '''
 
 # this function will return a list of filename given a path to a directory
@@ -98,7 +98,7 @@ however, before this I want to write a header for column.
 '''
 with open('C:/Users/mattg/Documents/GitHub/GMAT-automation/results/all_results.csv', 'w', newline = '') as csvfile:
     resultsWriter = csv.writer(csvfile, delimiter = ',')
-    resultsWriter.writerow(['Month', 'Hour', 'semi Major Axis [km]', 'Eccentricity',
+    resultsWriter.writerow(['Month', 'Hour', 'Radius of Periapsis [km]', 'Eccentricity',
                             'inclination', 'separation velocity V [km/s]',
                             'separation velocity N [km/s]', 'separation velocity B [km/s]',
                             'Time to 1 km [secs]'])
