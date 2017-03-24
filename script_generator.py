@@ -18,9 +18,10 @@ def float_range(start, stop, step):
     incremented by your step value.
     note that to store the values in a list you have to use list()
     ex: list(float_range(1.0, 2.0, 0.1))'''
+    yield start
     while start < stop:
-        yield start
         start += step
+        yield start
 
 # here we describe the range of state vector components for a keplarian state vector.
 radiusPeriapsis = list(float_range(6728.137, 6978.137, 50))  # kilometers
@@ -41,7 +42,7 @@ of the combined satellites.'''
 angleFromNormalAxis = list(float_range(0, pi, pi/3))         # in rad
 angleFromVelAxis = list(float_range(0, 2*pi, pi/3))          # in rad
 # from here we set the variations of the velocity magnitude
-sepVelMag = list(float_range(6e-05, 10e-05, 1e-05))  # in km/s
+sepVelMag = list(float_range(6e-05, 1e-04, 1e-05))  # in km/s
 # next we can have the pointing accurcy which is +/- 5 degrees in any direction which
 # will effect the two angles that we defined for the orientation
 pointingAccStart = -5 * (pi/180)

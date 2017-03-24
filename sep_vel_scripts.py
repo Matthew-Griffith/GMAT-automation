@@ -20,9 +20,11 @@ def float_range(start, stop, step):
     incremented by your step value.
     note that to store the values in a list you have to use list()
     ex: list(float_range(1.0, 2.0, 0.1))'''
+    yield start
     while start < stop:
-        yield start
         start += step
+        yield start
+
 
 # here we describe the range of state vector components for a keplarian state vector.
 radiusPeriapsis = 6728.137  # kilometers
