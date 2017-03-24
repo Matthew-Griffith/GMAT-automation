@@ -43,7 +43,7 @@ of the combined satellites.'''
 
 # here we set the range of the orientations using two angles
 angleFromNormalAxis = list(float_range(0, pi, pi/3))         # in rad
-angleFromVelAxis = [0*(pi/180), 60*(pi/180), 120*(pi/180), 180*(pi/180), 240*(pi/180), 300*(pi/180), 360*(pi/180)]          # in deg
+angleFromVelAxis = [60*(pi/180), 120*(pi/180), 180*(pi/180), 240*(pi/180), 300*(pi/180), 360*(pi/180)]          # in deg
 # from here we set the variations of the velocity magnitude
 sepVelMag = list(float_range(6e-05, 1e-04, 1e-05))  # in km/s
 # next we can have the pointing accurcy which is +/- 5 degrees in any direction which
