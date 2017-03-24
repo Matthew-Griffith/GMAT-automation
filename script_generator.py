@@ -23,7 +23,7 @@ def float_range(start, stop, step):
         start += step
 
 # here we describe the range of state vector components for a keplarian state vector.
-semiMajorAxisRange = list(float_range(6728.137, 6978.137, 50))  # kilometers
+radiusPeriapsis = list(float_range(6728.137, 6978.137, 50))  # kilometers
 eccentricityRange = list(float_range(0.0, 0.5, 0.1))
 inclinationRange = [28, 51.6]       # inclination of ksc and ISS
 
@@ -69,7 +69,7 @@ for iAngleFromNorm in range(len(angleFromNormalAxis)):
                     V = sepVelMag[iSepMag] * sin(angleFromVelAxis[iAngleFromVel] +
                         pointErrVel[iPointErrVel]) * cos(angleFromNormalAxis[iAngleFromNorm] +
                         pointErrNormal[iPointErrNorm])
-                    N = sepVelMag[iSepMag] * cos(angleFromVelAxis[iAngleFromVel] + 
+                    N = sepVelMag[iSepMag] * cos(angleFromVelAxis[iAngleFromVel] +
                         pointErrVel[iPointErrVel])
                     B = sepVelMag[iSepMag] * sin(angleFromVelAxis[iAngleFromVel] +
                         pointErrVel[iPointErrVel]) * sin(angleFromNormalAxis[iAngleFromNorm] +
@@ -84,8 +84,7 @@ pathScript = "C:/Users/mattg/Documents/GitHub/GMAT-automation/Generated-Scripts/
 pathReport = "C:/Users/mattg/Documents/GitHub/GMAT-automation/GMAT-Reports/"
 
 # in order to write to the files the ranges need to be converted into strings
-semiMajorAxisRange = list(map(str, semiMajorAxisRange))
-eccentricityRange = list(map(str, eccentricityRange))
+eccentricityRangeStr = list(map(str, eccentricityRange))
 inclinationRange = list(map(str, inclinationRange))
 sepVelRangeVStr = list(map(str, sepVelRangeV))
 sepVelRangeNStr = list(map(str, sepVelRangeN))
@@ -99,14 +98,15 @@ counter = 0
 # we will create another set of nested for loops like for the separation vector
 for iTime in range(len(timeRange)):
     for iDate in range(len(dateRange)):
-        for iSMA in range(len(semiMajorAxisRange)):
-            for iEcc in range(len(eccentricityRange)):
+        for iRP in range(len(radiusPeriapsis)):
+            for iEcc in range(len(eccentricityRangeStr)):
                 for iInc in range(len(inclinationRange)):
                     for iSepVec in range(len(sepVelRangeV)):
                         # now these for loop will track and update our position in their
                         # given ranges, the first thing we need is a helpful filename
+                        semiMajorAxis = str(radiusPeriapsis[iRP]/(1 - eccentricityRange[iEcc]))
                         filename = (dateRangeFile[iDate] + "_" + timeRangeFile[iTime] + "_"
-                                    + semiMajorAxisRange[iSMA] + "_" + eccentricityRange[iEcc]
+                                    + semiMajorAxis + "_" + eccentricityRangeStr[iEcc]
                                     + "_" + inclinationRange[iInc] + "_"
                                     + sepVelRangeVStr[iSepVec] + "_" + sepVelRangeNStr[iSepVec]
                                     + "_" + sepVelRangeBStr[iSepVec] + ".csv")
@@ -126,16 +126,16 @@ for iTime in range(len(timeRange)):
                                                   + timeRange[iTime] + ";\n")
                             elif line.startswith("GMAT Emitter.SMA"):
                                 currentFile.write("GMAT Emitter.SMA = "
-                                                  + semiMajorAxisRange[iSMA] + ";\n")
+                                                  + semiMajorAxis + ";\n")
                             elif line.startswith("GMAT Detector.SMA"):
                                 currentFile.write("GMAT Detector.SMA = "
-                                                  + semiMajorAxisRange[iSMA] + ";\n")
+                                                  + semiMajorAxis + ";\n")
                             elif line.startswith("GMAT Emitter.ECC"):
                                 currentFile.write("GMAT Emitter.ECC = "
-                                                  + eccentricityRange[iEcc] + ";\n")
+                                                  + eccentricityRangeStr[iEcc] + ";\n")
                             elif line.startswith("GMAT Detector.ECC"):
                                 currentFile.write("GMAT Detector.ECC = "
-                                                  + eccentricityRange[iEcc] + ";\n")
+                                                  + eccentricityRangeStr[iEcc] + ";\n")
                             elif line.startswith("GMAT Emitter.INC"):
                                 currentFile.write("GMAT Emitter.INC = "
                                                   + inclinationRange[iInc] + ";\n")
